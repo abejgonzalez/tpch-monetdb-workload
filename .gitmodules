@@ -1,0 +1,3 @@
+[submodule "overlay/root/tpch-scripts"]
+	path = overlay/root/tpch-scripts
+	url = git@github.com:abejgonzalez/tpch-scripts.git

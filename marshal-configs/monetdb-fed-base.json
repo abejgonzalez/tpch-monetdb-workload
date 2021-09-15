@@ -1,0 +1,7 @@
+{
+    "name" : "monetdb-fed-base",
+    "base" : "fedora-base.json",
+    "rootfs-size" : "10GiB",
+    "workdir" : "..",
+    "guest-init" : "build-monetdb-native-riscv64.sh"
+}

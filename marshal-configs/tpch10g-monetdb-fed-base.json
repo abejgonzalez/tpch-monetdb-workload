@@ -1,0 +1,9 @@
+{
+    "name" : "tpch10g-monetdb-fed-base",
+    "base" : "monetdb-fed-base.json",
+    "mem" : "30GiB",
+    "rootfs-size" : "30GiB",
+    "workdir" : "..",
+    "host-init" : "build-tpch.sh 10",
+    "overlay" : "overlay"
+}
