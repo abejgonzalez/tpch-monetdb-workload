@@ -26,5 +26,11 @@ echo "Testing installation"
 which monetdb
 which mserver5
 
+echo "Install pystethoscope"
+pip install -U monetdb-stethoscope
+
+echo "Testing installation"
+which stethoscope
+
 echo "Installation successful"
 poweroff

@@ -1,0 +1,9 @@
+{
+    "name" : "tpch1g-monetdb",
+    "base" : "monetdb-base.json",
+    "mem" : "20GiB",
+    "rootfs-size" : "20GiB",
+    "workdir" : "..",
+    "host-init" : "host-gen-tpch-data.sh 1",
+    "overlay" : "overlay"
+}

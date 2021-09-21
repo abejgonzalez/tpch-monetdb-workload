@@ -1,1 +1,3 @@
 .*.swp
+monetdb/
+monetdb-build/
