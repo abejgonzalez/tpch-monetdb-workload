@@ -1,0 +1,23 @@
+{
+    "name" : "monetdb-br-base-full-auto",
+    "base" : "br-base.json",
+    "rootfs-size" : "10GiB",
+    "mem" : "10GiB",
+    "workdir" : "..",
+    "host-init" : "host-build-monetdb.sh 1", # build monetdb + gen. file to load in
+    "guest-init" : "guest-load-tpch-db.sh 1", # load db
+    "overlay" : "overlay",
+    "run" : "guest-run-experiment.sh 1 1", # run db
+    "distro" : {
+        "name" : "br",
+        "opts" : {
+            "configs" : ["python3-brcfg"]
+        }
+    },
+    "outputs" : [
+        "/root/tpch-scripts/03_run/SF1-prof-results/prof-timings.csv",
+        "/root/tpch-scripts/03_run/SF1-prof-results/prof-stethoscope.log",
+        "/root/tpch-scripts/03_run/SF1-noprof-results/noprof-timings.csv"
+    ],
+    "post_run_hook" : "host-analysis.sh" # retrieve results and split stethoscope log
+}

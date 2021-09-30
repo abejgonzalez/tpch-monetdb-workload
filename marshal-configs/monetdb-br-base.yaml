@@ -1,0 +1,15 @@
+{
+    "name" : "monetdb-br-base",
+    "base" : "br-base.json",
+    "rootfs-size" : "20GiB",
+    "mem" : "20GiB",
+    "workdir" : "..",
+    "host-init" : "host-build-monetdb.sh 1",
+    "overlay" : "overlay",
+    "distro" : {
+        "name" : "br",
+        "opts" : {
+            "configs" : ["python3-brcfg"]
+        }
+    }
+}
