@@ -19,5 +19,5 @@
         "/root/tpch-scripts/03_run/SF1-prof-results/prof-stethoscope.log",
         "/root/tpch-scripts/03_run/SF1-noprof-results/noprof-timings.csv"
     ],
-    "post_run_hook" : "host-analysis.sh" # retrieve results and split stethoscope log
+    "post_run_hook" : "host-analysis.sh monetdb-br-base-full-auto" # retrieve results and split stethoscope log
 }

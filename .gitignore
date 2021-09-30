@@ -1,3 +1,4 @@
 .*.swp
 monetdb/
 monetdb-build/
+overlay/usr
