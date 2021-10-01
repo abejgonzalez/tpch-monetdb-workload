@@ -33,6 +33,8 @@ kill $(cat /tmp/stethoscope.pid)
 kill $(cat /tmp/mserver.pid)
 kill -9 $(cat /tmp/stethoscope.pid) || true
 kill -9 $(cat /tmp/mserver.pid) || true
+tail --pid=$(cat /tmp/stethoscope.pid) -f /dev/null
+tail --pid=$(cat /tmp/mserver.pid) -f /dev/null
 
 # organize data
 data_dir=SF${1}-prof-results
@@ -40,6 +42,8 @@ rm -rf $data_dir
 mkdir $data_dir
 mv timings.csv $data_dir/prof-timings.csv
 mv /tmp/*stethoscope_log* $data_dir/prof-stethoscope.log
+
+sleep 5
 
 ##### RUN W.O. PROFILING
 
@@ -58,6 +62,7 @@ mclient -d SF-$scaling_factor hello_world.sql
 # kill the processes
 kill $(cat /tmp/mserver.pid)
 kill -9 $(cat /tmp/mserver.pid) || true
+tail --pid=$(cat /tmp/mserver.pid) -f /dev/null
 
 # organize data
 data_dir=SF${1}-noprof-results
