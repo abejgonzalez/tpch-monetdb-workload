@@ -15,6 +15,8 @@ cd $THIS_DIR
 
 echo "Launch instance"
 pushd $AWS_TOOLS_DIR
+# verify instance is off
+python awstools.py terminate --inst_type m5.large --clustertag benchtestx86 | true
 python awstools.py launch --inst_type m5.large --inst_amt 1 --clustertag benchtestx86 2>&1 | tee $IP_ADDR_FILE
 popd
 
@@ -39,6 +41,7 @@ run_script () {
     ssh -o "StrictHostKeyChecking no" -t $IP_ADDR 'bash -s' < $SCRIPT "$@"
 }
 
+run "echo \"Working\""
 copy ./linux-gnu.cmake $IP_ADDR:
 
 # install monetdb from source on the server
