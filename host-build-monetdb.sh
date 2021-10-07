@@ -63,7 +63,10 @@ pushd $BUILD_DIR
 
 echo "Build MonetDB"
 rm -rf monetdb
-git clone --depth 1 https://github.com/MonetDB/MonetDB.git monetdb
+git clone https://github.com/MonetDB/MonetDB.git monetdb
+pushd monetdb
+git checkout 19539f3 # semi-arb. commit
+popd
 #cp $BASE_DIR/CMakeLists.txt monetdb/
 #cp $BASE_DIR/monetdb-functions.cmake monetdb/cmake/
 mkdir -p monetdb-build
