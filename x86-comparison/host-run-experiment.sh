@@ -54,7 +54,7 @@ sleep 5
 sleep 10
 
 # run tpch
-./horizontal_run.sh --db SF-$scaling_factor -v
+./horizontal_run.sh --db SF-$scaling_factor -n 10 -v
 
 # run extra sql to dump all tpch
 mclient -d SF-$scaling_factor hello_world.sql
