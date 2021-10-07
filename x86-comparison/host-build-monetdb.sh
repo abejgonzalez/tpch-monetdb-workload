@@ -10,10 +10,6 @@ sudo yum install -y bzip2-devel libuuid-devel pcre-devel readline-devel xz-devel
 
 BASE_DIR=$PWD
 BUILD_DIR=$PWD/build-area
-CROSS_COMPILE_AREA=$BASE_DIR/temp
-
-rm -rf $CROSS_COMPILE_AREA
-mkdir -p $CROSS_COMPILE_AREA
 
 rm -rf $BUILD_DIR
 mkdir -p $BUILD_DIR
@@ -25,11 +21,8 @@ git clone https://github.com/MonetDB/MonetDB.git monetdb
 pushd monetdb
 git checkout 19539f3 # semi-arb. commit
 popd
-#cp $BASE_DIR/CMakeLists.txt monetdb/
-#cp $BASE_DIR/monetdb-functions.cmake monetdb/cmake/
 mkdir -p monetdb-build
 pushd monetdb-build
-#    -DCMAKE_INSTALL_PREFIX=$CROSS_COMPILE_AREA \ # install in bin
 # Run the build (turn off assertions)
 cmake3 \
     -DCMAKE_TOOLCHAIN_FILE=$BASE_DIR/linux-gnu.cmake \
@@ -60,9 +53,6 @@ echo "Testing installation"
 which monetdb
 which mserver5
 which stethoscope
-#ls $CROSS_COMPILE_AREA/bin/monetdb
-#ls $CROSS_COMPILE_AREA/bin/mserver5
-
 
 popd
 popd
