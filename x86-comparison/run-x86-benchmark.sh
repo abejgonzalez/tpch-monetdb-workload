@@ -13,13 +13,13 @@ AWS_TOOLS_DIR=~/chipyard/sims/firesim/deploy/awstools
 
 cd $THIS_DIR
 
-#echo "Launch instance"
-#pushd $AWS_TOOLS_DIR
-#python awstools.py benchlaunch 2>&1 | tee $IP_ADDR_FILE
-#popd
-#
-#echo "Wait for instance to boot"
-#sleep 5m
+echo "Launch instance"
+pushd $AWS_TOOLS_DIR
+python awstools.py launch --inst_type m5.large --inst_amt 1 --clustertag benchtestx86 2>&1 | tee $IP_ADDR_FILE
+popd
+
+echo "Wait for instance to boot"
+sleep 5m
 
 IP_ADDR=$(grep -E -o "192\.168\.[0-9]{1,3}\.[0-9]{1,3}" $IP_ADDR_FILE | head -n 1)
 
@@ -54,5 +54,5 @@ copy $IP_ADDR:tpch-scripts/03_run/SF1-prof-results/ SF1-prof-results
 
 echo "Shutting down instance"
 pushd $AWS_TOOLS_DIR
-python awstools.py benchterminate
+python awstools.py terminate --inst_type m5.large --clustertag benchtestx86 2>&1 | tee $IP_ADDR_FILE
 popd
