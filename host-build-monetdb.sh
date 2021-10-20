@@ -4,6 +4,12 @@
 
 set -x
 
+# hardcoded for now (use precrosscompiled libs from buildroot)
+BUILDROOT_DIR=/home/centos/chipyard/software/firemarshal/boards/default/distros/br/buildroot/
+
+# update packages
+sudo yum update -y
+
 echo "Install required packages"
 sudo yum install -y bison cmake cmake3 openssl-devel pkgconf python3
 
@@ -21,64 +27,26 @@ rm -rf $BUILD_DIR
 mkdir -p $BUILD_DIR
 pushd $BUILD_DIR
 
-#echo "Build zlib"
-#git clone --depth 1 https://github.com/madler/zlib.git
-#pushd zlib
-#mkdir -p build
-#pushd build
-#CC=riscv64-unknown-linux-gnu-gcc \
-#    ../configure --prefix=$CROSS_COMPILE_AREA
-#make -j
-#make -j install
-#popd
-#popd
-#
-#echo "Build bzip2"
-#wget https://www.sourceware.org/pub/bzip2/bzip2-latest.tar.gz
-#tar -xvf bzip2-latest.tar.gz
-#pushd bzip2-1.0.8
-## sed to change the
-#sed -i -E 's/CC=/CC?=/g' Makefile
-#sed -i -E 's/AR=/AR?=/g' Makefile
-#sed -i -E 's/RANLIB=/RANLIB?=/g' Makefile
-#sed -i -E 's/-O2/-O2 -fPIC/g' Makefile
-#AR=riscv64-unknown-linux-gnu-ar \
-#    RANLIB=riscv64-unknown-linux-gnu-ranlib \
-#    CC=riscv64-unknown-linux-gnu-gcc \
-#    make -j PREFIX=$CROSS_COMPILE_AREA install
-#popd
-#
-#echo "Build readline"
-#wget ftp://ftp.cwru.edu/pub/bash/readline-8.1.tar.gz
-#tar xvf readline-8.1.tar.gz
-#pushd readline-8.1
-#mkdir -p build
-#pushd build
-#CC=riscv64-unknown-linux-gnu-gcc \
-#    ../configure --host=x86_64 --prefix=$CROSS_COMPILE_AREA
-#make -j
-#make -j install
-#popd
-#popd
-
 echo "Build MonetDB"
 rm -rf monetdb
 git clone https://github.com/MonetDB/MonetDB.git monetdb
 pushd monetdb
-git checkout 19539f3 # semi-arb. commit
+git checkout cc3020d # match Jul2021-SP1 release
 popd
-#cp $BASE_DIR/CMakeLists.txt monetdb/
-#cp $BASE_DIR/monetdb-functions.cmake monetdb/cmake/
 mkdir -p monetdb-build
 pushd monetdb-build
 # Run the build (turn off assertions)
 cmake3 \
-    -DCMAKE_TOOLCHAIN_FILE=$BUILD_DIR/../linux-riscv-gnu.cmake \
-    -DEXTRA_CMAKE_FIND_ROOT_PATH=$CROSS_COMPILE_AREA \
-    -DCMAKE_PREFIX_PATH=$CROSS_COMPILE_AREA \
+    -DCMAKE_TOOLCHAIN_FILE=$BUILDROOT_DIR/output/host/usr/share/buildroot/toolchainfile.cmake \
+    -DCMAKE_C_FLAGS="-D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -O3 -march=rv64gc -mabi=lp64d" \
+    -DCMAKE_CXX_FLAGS="-D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -O3 -march=rv64gc -mabi=lp64d" \
     -DCMAKE_INSTALL_PREFIX=$CROSS_COMPILE_AREA \
+    -DRELEASE_VERSION=ON \
+    -DTESTING=OFF \
     -DCMAKE_SUMMARY=ON \
     -DASSERT=OFF \
+    -DSTRICT=OFF \
+    -DCMAKE_UNITTESTS=OFF \
     -DWITH_BZ2=OFF \
     -DWITH_CMOCKA=OFF \
     -DWITH_CURL=OFF \

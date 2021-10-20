@@ -10,7 +10,7 @@
 #set(RISCV_COMPILER_FLAGS "-O3 -mno-mmx -mno-sse -mno-sse2 -mno-sse3 -mno-ssse3 -mno-sse4.1 -mno-sse4.2 -mno-sse4 -mno-avx -mno-avx2")
 #set(RISCV_COMPILER_FLAGS "-O3 -mno-mmx -mno-ssse3 -mno-sse4.1 -mno-sse4.2 -mno-sse4 -mno-avx -mno-avx2")
 #set(RISCV_COMPILER_FLAGS "-O3")
-set(RISCV_COMPILER_FLAGS "-mno-mmx -mno-ssse3 -mno-sse4.1 -mno-sse4.2 -mno-sse4 -mno-avx -mno-avx2")
+set(RISCV_COMPILER_FLAGS "-O3 -mno-mmx -mno-ssse3 -mno-sse4.1 -mno-sse4.2 -mno-sse4 -mno-avx -mno-avx2")
 #set(RISCV_LINKER_FLAGS "${RISCV_LINKER_FLAGS} -lstdc++ -lpthread -lm -ldl")
 
 set(CMAKE_C_FLAGS             "${RISCV_COMPILER_FLAGS} ${CMAKE_C_FLAGS}")

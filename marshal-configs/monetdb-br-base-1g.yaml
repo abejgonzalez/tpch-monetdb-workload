@@ -1,0 +1,16 @@
+{
+    "name" : "monetdb-br-base-1g",
+    "base" : "br-base.json",
+    "workdir" : "..",
+    "rootfs-size" : "10GiB",
+    "mem" : "10GiB",
+    "overlay" : "overlay",
+    "distro" : {
+        "name" : "br",
+        "opts" : {
+            "configs" : ["python3-brcfg"]
+        }
+    },
+    "guest-init" : "guest-load-tpch-db.sh 1", # load db
+    "host-init-post-img" : "host-build-monetdb.sh 1"  # build monetdb + gen. file to load in (needs br to be ready)
+}

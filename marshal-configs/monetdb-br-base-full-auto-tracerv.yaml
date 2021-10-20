@@ -1,5 +1,5 @@
 {
-    "name" : "monetdb-br-base-full-auto",
+    "name" : "monetdb-br-base-full-auto-tracerv",
     "base" : "br-base.json",
     "workdir" : "..",
     "rootfs-size" : "10GiB",
@@ -13,11 +13,8 @@
     },
     "guest-init" : "guest-load-tpch-db.sh 1", # load db
     "host-init-post-img" : "host-build-monetdb.sh 1",  # build monetdb + gen. file to load in (needs br to be ready)
-    "run" : "guest-run-experiment.sh 1 1", # run db
+    "run" : "guest-run-experiment-tracerv.sh 1 1", # run db
     "outputs" : [
-        "/root/tpch-scripts/03_run/SF1-prof-results/prof-timings.csv",
-        "/root/tpch-scripts/03_run/SF1-prof-results/prof-stethoscope.log",
         "/root/tpch-scripts/03_run/SF1-noprof-results/noprof-timings.csv"
-    ],
-    "post_run_hook" : "host-analysis.sh monetdb-br-base-full-auto" # retrieve results and split stethoscope log
+    ]
 }
